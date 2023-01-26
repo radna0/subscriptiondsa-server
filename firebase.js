@@ -1,12 +1,14 @@
-const { initializeApp } = require('firebase/app')
-const {
+import { initializeApp } from 'firebase/app'
+import {
   getFirestore,
   collection,
   query,
   getDocs,
   where,
-} = require('firebase/firestore')
-require('dotenv').config()
+} from 'firebase/firestore'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const config = {
   apiKey: `${process.env.EXPRESS_APIKEY}`,
@@ -18,11 +20,11 @@ const config = {
   measurementId: `${process.env.EXPRESS_MEASUREMENTID}`,
 }
 
-const appfB = initializeApp(config)
-const db = getFirestore(appfB)
-const emailRef = collection(db, 'emails')
+export const appfB = initializeApp(config)
+export const db = getFirestore(appfB)
+export const emailRef = collection(db, 'emails')
 
-async function getEmails() {
+export async function getEmails() {
   const docSnap = await getDocs(emailRef)
   const emails = []
   docSnap.forEach((doc) => {
@@ -30,7 +32,7 @@ async function getEmails() {
   })
   return emails
 }
-async function findEmail(email) {
+export async function findEmail(email) {
   const q = query(emailRef, where('Email', '==', email))
   const docSnap = await getDocs(q)
   let found
@@ -40,7 +42,7 @@ async function findEmail(email) {
   })
   return found
 }
-async function getEmailsByTimeZone(TimeZone) {
+export async function getEmailsByTimeZone(TimeZone) {
   const q = query(emailRef, where('TimeZone', '==', TimeZone))
   const docSnap = await getDocs(q)
   const emails = []
@@ -48,13 +50,4 @@ async function getEmailsByTimeZone(TimeZone) {
     emails.push({ ...doc.data(), id: doc.id })
   })
   return emails
-}
-
-module.exports = {
-  appfB,
-  emailRef,
-  getEmails,
-  findEmail,
-  getEmailsByTimeZone,
-  db,
 }

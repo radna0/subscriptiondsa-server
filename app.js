@@ -1,10 +1,14 @@
-const express = require('express')
-const cors = require('cors')
-const { findEmail } = require('./firebase')
-const { handleEmail, delEmail, handleGivingProblems } = require('./utility')
-require('dotenv').config()
+import express from 'express'
+import cors from 'cors'
+import { findEmail } from './firebase.js'
+import { handleEmail, delEmail, handleGivingProblems } from './utility.js'
+import { HandleCourierSend } from './resouces.js'
 
-const app = express()
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+export const app = express()
 app.use(cors())
 app.use(express.json())
 // async function getDataTZ() {
@@ -28,10 +32,18 @@ app.post(`${process.env.EXPRESS_POST_ENDPOINT_ENV}`, async (req, res) => {
     if (found) throw new Error('Duplicate Entry')
     const problems = await handleGivingProblems()
     await handleEmail({ email, timeZone, problems })
-
+    const id = await findEmail(email)
+    const reqID = await HandleCourierSend(
+      '51EPCE0S9AMG7GQTDR7SJHX8QVBF',
+      email,
+      {
+        id: id,
+      }
+    )
     res.status(200).json('Success')
   } catch (e) {
     res.status(409).json(e)
   }
 })
-module.exports = app
+
+export default app

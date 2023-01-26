@@ -21,6 +21,9 @@
     "firebase": "^9.16.0",
     "leetcode-query": "^0.2.6",
     "node-cron": "^3.0.2",
+    "node-fetch": "^3.3.0",
     "nodemon": "^2.0.20"
-  }
+  },
+"type": "module"
 }
+
