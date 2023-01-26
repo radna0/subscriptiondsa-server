@@ -82,7 +82,7 @@ const handleSchedule = (TimeZone) => {
   // const saved = '0 7 */1 */1 *'
   const ScheduleExe = () => {
     const task = cron.schedule(
-      '30 7 */1 */1 *',
+      '45 7 */1 */1 *',
       async () => {
         const allEmails = await getEmailsByTimeZone(TimeZone)
 
