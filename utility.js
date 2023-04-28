@@ -84,7 +84,7 @@ export const handleSchedule = (TimeZone) => {
 
   const ScheduleExe = () => {
     const task = cron.schedule(
-      '*/1 * * * *',
+      '0 */1 * * *',
       async () => {
         const allEmails = await getEmailsByTimeZone(TimeZone)
 
