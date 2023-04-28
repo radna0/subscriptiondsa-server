@@ -11,11 +11,10 @@ dotenv.config()
 export const app = express()
 app.use(cors())
 app.use(express.json())
-// async function getDataTZ() {
-//   let response = await fetch(`${process.env.EXPRESS_ALL_TIMEZONES}`)
-//   let data = await response.json()
-//   return data
-// }
+
+app.get('/get', (req, res) => {
+  res.json('ok')
+})
 app.delete(`${process.env.EXPRESS_DELETE_ENDPOINT_ENV}`, async (req, res) => {
   try {
     const { id } = req.body
