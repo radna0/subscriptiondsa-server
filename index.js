@@ -20,5 +20,5 @@ app.listen(process.env.EXPRESS_PORT, async () => {
   console.log(
     `💵 Server running and listening on http://localhost:${process.env.EXPRESS_PORT}/ …`
   )
+  app.emit('Worker')
 })
-app.emit('Worker')
