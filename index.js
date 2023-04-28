@@ -10,12 +10,15 @@ async function getDataTZ() {
   let data = await response.json()
   return data
 }
-app.listen(process.env.EXPRESS_PORT, async () => {
-  console.log(
-    `💵 Server running and listening on http://localhost:${process.env.EXPRESS_PORT}/ …`
-  )
+app.on('Worker', async () => {
   const allTimeZones = await getDataTZ()
   for (let data in allTimeZones) {
     handleSchedule(data)
   }
 })
+app.listen(process.env.EXPRESS_PORT, async () => {
+  console.log(
+    `💵 Server running and listening on http://localhost:${process.env.EXPRESS_PORT}/ …`
+  )
+})
+app.emit('Worker')
